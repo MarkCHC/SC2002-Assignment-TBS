@@ -11,24 +11,28 @@ public class TurnOrderStrategy {
     public TurnOrderStrategy(State s) {
         turnOrder = new ArrayList<>();
         // shallow copy because we want to interact with them
-        for (Combatant p: s.playerState) {
+        for (Combatant p: s.getPlayerState()) {
             if (p.isAlive())
                 turnOrder.add(p);
         }
-        for (Combatant e: s.enemyState) {
+        for (Combatant e: s.getEnemyState()) {
             if (e.isAlive())
                 turnOrder.add(e);
         }
     }
 
+    public List<Combatant> getTurnOrder() {
+        return turnOrder;
+    }
+
     public void endTurn() {
         if (turnOrder.size() > 0)
-            turnOrder.removeFirst();
+            turnOrder.remove(0);
     }
 
     public Combatant getNextCombatant() {
         if (turnOrder.size() > 0) {
-            return turnOrder.getFirst();
+            return turnOrder.get(0);
         } else {
             return null;
         }

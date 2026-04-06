@@ -4,6 +4,8 @@ package game.entities;
 public class Combatant {
     private int speed;
     protected boolean player;
+
+    // public Combatant() {}
     
     public Combatant(int speed) {
         this.speed = speed;
