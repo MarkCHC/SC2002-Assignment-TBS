@@ -109,13 +109,25 @@
                 return;
             }
 
-            if (this.specialSkillCooldown == 0) {
-                System.out.println("BOOM! " + this.name + " unleashes their Special Skill!");
-                this.specialSkillCooldown = 3; // Put it on cooldown
-            } else {
-                System.out.println("Skill failed! Special skill is on cooldown for " + this.specialSkillCooldown + " turns.");
+            public void useSpecialSkill() {
+                if (this.specialSkillCooldown > 0) {
+                    System.out.println("Skill is on cooldown!");
+                    return;
+                }
+
+                // Trigger the actual attack/effect
+                triggerSpecialSkillEffect();
+
+                // Start the cooldown timer
+                this.specialSkillCooldown = 3; // Or whatever your max cooldown is
             }
-        }
+
+// 2. The "Action Only" Method (No Cooldown Math!)
+            public void triggerSpecialSkillEffect() {
+                System.out.println(this.getName() + " unleashes their Special Skill!");
+                // Put your damage, healing, or status effect logic here!
+                // Notice how there is ZERO mention of cooldowns in this method.
+            }
 
         // --- 3. Item Usage ---
 

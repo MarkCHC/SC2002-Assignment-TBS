@@ -40,11 +40,8 @@ public class PowerStone implements Item {
 
         System.out.println("Player used " + getName() + "!");
 
-        int savedCooldown = target.getSpecialSkillCooldown();
-        target.setSpecialSkillCooldown(0);
-        target.useSpecialSkill();
-        target.setSpecialSkillCooldown(savedCooldown);
-
+        target.getSpecialSkillCooldown();
+        
         this.psQuantity--;
         System.out.println("You have " + this.psQuantity + " Power Stones left.");
     }
