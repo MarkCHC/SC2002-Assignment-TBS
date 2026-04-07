@@ -9,16 +9,14 @@
     public class Player {
 
         // --- Core Stats ---
-        private String name;
-        private int hp;
-        private int maxHp;
-        private int baseAttack;
+        protected String name;
+        protected int hp;
+        protected int maxHp;
+        protected int baseAttack;
 
         // --- Trackers ---
-        private int specialSkillCooldown = 0;
-
-        // The master list that holds any and all status effects (Stun, Smoke, Poison, Buffs)
-        private List<StatusEffect> activeEffects;
+        protected int specialSkillCooldown = 0;
+        protected List<StatusEffect> statusEffects; // Unified name
 
         // --- Constructor ---
         public Player(String name, int startingHP, int maximumHP, int baseAttack) {
@@ -26,7 +24,7 @@
             this.hp = startingHP;
             this.maxHp = maximumHP;
             this.baseAttack = baseAttack;
-            this.activeEffects = new ArrayList<>(); // Always initialize lists!
+            this.statusEffects = new ArrayList<>();
         }
 
         // --- Standard Getters & Setters ---
@@ -39,25 +37,13 @@
         public void setSpecialSkillCooldown(int cooldown) { this.specialSkillCooldown = cooldown; }
 
         // --- 1. Status Effect Management ---
-
         public void addStatusEffect(StatusEffect effect) {
-            this.activeEffects.add(effect);
+            this.statusEffects.add(effect);
             System.out.println("-> [" + this.name + "] gained effect: " + effect.getName());
         }
 
-        // Helper for Arcane Blast to check if the buff already exists
-        public ArcaneBoost getArcaneBoost() {
-            for (StatusEffect effect : this.activeEffects) {
-                if (effect instanceof ArcaneBoost) {
-                    return (ArcaneBoost) effect;
-                }
-            }
-            return null;
-        }
-
-        // Helper to check if the player is allowed to move (e.g., not Stunned)
         public boolean canAct() {
-            for (StatusEffect effect : this.activeEffects) {
+            for (StatusEffect effect : this.statusEffects) {
                 if (effect.skipsTurn()) {
                     return false;
                 }
@@ -67,72 +53,68 @@
 
         // --- 2. Combat Mechanics ---
 
-        // Standard attack calculating base damage + any buffs
-        public void attack(Enemy target) {
+        // 2. The perfectly clean, unified attack!
+        public void attack(Combatant target) {
             if (!canAct()) {
                 System.out.println(this.name + " is incapacitated and cannot attack!");
-                return; // Guard Clause
+                return;
             }
 
-            int totalDamage = this.baseAttack;
+            int finalDamage = this.baseAttack;
 
-            // Add Arcane Boost damage if they have it
-            ArcaneBoost boost = getArcaneBoost();
-            if (boost != null) {
-                totalDamage += boost.getAttackBonus();
+            // The Player blindly asks every effect to modify the outgoing damage!
+            for (StatusEffect effect : this.statusEffects) {
+                finalDamage = effect.modifyOutgoingDamage(finalDamage);
             }
 
-            System.out.println(this.name + " attacks " + target.getName() + " for " + totalDamage + " damage!");
-            target.takeDamage(totalDamage);
+            System.out.println(this.name + " attacks " + target.getName() + " for " + finalDamage + " damage!");
+            target.takeDamage(finalDamage);
         }
 
-        // Taking damage and allowing defensive effects (like Smoke) to block it
         public void takeDamage(int rawDamage) {
             int finalDamage = rawDamage;
 
-            // Ask every active effect if they want to modify the damage
-            for (StatusEffect effect : this.activeEffects) {
+            // Ask every active effect if they want to modify incoming damage (like Stealth)
+            for (StatusEffect effect : this.statusEffects) {
                 finalDamage = effect.modifyIncomingDamage(finalDamage);
             }
 
             this.hp -= finalDamage;
-            if (this.hp < 0) this.hp = 0; // Prevent negative HP
+            if (this.hp < 0) this.hp = 0;
 
             if (finalDamage > 0) {
                 System.out.println(this.name + " takes " + finalDamage + " damage. Current HP: " + this.hp);
             }
         }
 
-        public void useSpecialSkill() {
+        // --- 3. Special Skills ---
+
+        public void useSpecialSkill(Combatant target) {
             if (!canAct()) {
                 System.out.println(this.name + " is incapacitated and cannot use their special skill!");
                 return;
             }
 
-            public void useSpecialSkill() {
-                if (this.specialSkillCooldown > 0) {
-                    System.out.println("Skill is on cooldown!");
-                    return;
-                }
-
-                // Trigger the actual attack/effect
-                triggerSpecialSkillEffect();
-
-                // Start the cooldown timer
-                this.specialSkillCooldown = 3; // Or whatever your max cooldown is
+            if (this.specialSkillCooldown > 0) {
+                System.out.println("Skill is on cooldown for " + this.specialSkillCooldown + " more turns!");
+                return;
             }
 
-// 2. The "Action Only" Method (No Cooldown Math!)
-            public void triggerSpecialSkillEffect() {
-                System.out.println(this.getName() + " unleashes their Special Skill!");
-                // Put your damage, healing, or status effect logic here!
-                // Notice how there is ZERO mention of cooldowns in this method.
-            }
+            // Call the abstract effect method
+            triggerSpecialSkillEffect(target);
 
-        // --- 3. Item Usage ---
+            // Start the cooldown timer
+            this.specialSkillCooldown = 3;
+        }
 
-        // A universal way to use any item in the game
-        public void useItem(Item item, Player target) {
+        // 3. The Abstract "Action" method that Wizard and Warrior will fill out!
+        public abstract void triggerSpecialSkillEffect(Combatant target);
+
+
+        // --- 4. Item Usage ---
+
+        // 4. One single unified method for ANY target!
+        public void useItem(Item item, Combatant target) {
             if (!canAct()) {
                 System.out.println(this.name + " is incapacitated and cannot use items!");
                 return;
@@ -140,20 +122,11 @@
             item.use(target);
         }
 
-        public void useItem(Item item, Enemy target) {
-            if (!canAct()) {
-                System.out.println(this.name + " is incapacitated and cannot use items!");
-                return;
-            }
-            item.use(target);
-        }
-
-        // --- 4. Turn Cycle Management ---
+        // --- 5. Turn Cycle Management ---
 
         public void endTurn() {
             System.out.println("--- End of " + this.name + "'s Turn ---");
 
-            // 1. Reduce Cooldowns
             if (this.specialSkillCooldown > 0) {
                 this.specialSkillCooldown--;
                 if (this.specialSkillCooldown == 0) {
@@ -161,20 +134,22 @@
                 }
             }
 
-            // 2. Tick all Status Effects
             List<StatusEffect> expiredEffects = new ArrayList<>();
 
-            for (StatusEffect effect : this.activeEffects) {
+            for (StatusEffect effect : this.statusEffects) {
                 effect.passTurn();
-
-                // If the effect duration hit 0, mark it for removal
                 if (!effect.isActive()) {
                     expiredEffects.add(effect);
                     System.out.println("-> " + effect.getName() + " has worn off " + this.name + ".");
                 }
             }
 
-            // 3. Clean up expired effects
-            this.activeEffects.removeAll(expiredEffects);
+            this.statusEffects.removeAll(expiredEffects);
+        }
+
+        // The End of Level Wipe!
+        public void resetForNewLevel() {
+            this.statusEffects.clear();
+            System.out.println("The level ends. " + this.getName() + " takes a breath and readies for the next challenge.");
         }
     }
