@@ -7,7 +7,7 @@ public class Stun implements StatusEffect {
     private int duration;
 
     public Stun(int duration) {
-        this.duration = 2;
+        this.duration = duration;
     }
 
     @Override
@@ -28,6 +28,11 @@ public class Stun implements StatusEffect {
     @Override
     public int modifyIncomingDamage(int incomingDamage) {
         return incomingDamage;
+    }
+
+    @Override
+    public int modifyOutgoingDamage(int baseDamage) {
+        return baseDamage;
     }
 
     @Override

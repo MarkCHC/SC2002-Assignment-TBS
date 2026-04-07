@@ -7,7 +7,7 @@ public class Stealth implements StatusEffect{
     private int duration;
 
     public Stealth(int duration) {
-        this.duration = 2;
+        this.duration = duration;
     }
 
     @Override
@@ -29,6 +29,11 @@ public class Stealth implements StatusEffect{
     public int modifyIncomingDamage(int incomingDamage) {
         System.out.println("Player in stealth. 0 damage taken.");
         return 0;
+    }
+
+    @Override
+    public int modifyOutgoingDamage(int baseDamage) {
+        return baseDamage;
     }
 
     @Override

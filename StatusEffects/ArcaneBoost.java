@@ -3,10 +3,11 @@ package StatusEffects;
 public class ArcaneBoost implements StatusEffect {
 
     private String name = "Arcane Attack Boost";
-    private int attackBonus;
+    private int enemiesDefeated;
+    private int bonusPerKill = 10;
 
-    public ArcaneBoost(int startingBonus) {
-        this.attackBonus = startingBonus;
+    public ArcaneBoost(int startingKills) {
+        this.enemiesDefeated = startingKills;
     }
 
     @Override
@@ -16,7 +17,8 @@ public class ArcaneBoost implements StatusEffect {
 
     @Override
     public String getDescription() {
-        return "Infused with arcane energy. Attack power is increased by +" + this.attackBonus + ".";
+        int currentBonus = this.enemiesDefeated * this.bonusPerKill;
+        return "Base attack power is increased by +" + currentBonus + ".";
     }
 
     @Override
@@ -30,6 +32,12 @@ public class ArcaneBoost implements StatusEffect {
     }
 
     @Override
+    public int modifyOutgoingDamage(int baseDamage) {
+        int extraDamage = this.enemiesDefeated * this.bonusPerKill;
+        return baseDamage + extraDamage;
+    }
+
+    @Override
     public void passTurn() {
     }
 
@@ -38,12 +46,8 @@ public class ArcaneBoost implements StatusEffect {
         return false;
     }
 
-    public void addBonus(int amount) {
-        this.attackBonus += amount;
-        System.out.println("Total attack bonus is now +" + this.attackBonus);
-    }
-
-    public int getAttackBonus() {
-        return this.attackBonus;
+    public void addKill() {
+    this.enemiesDefeated++;
+    System.out.println("Wizard base attack grows");
     }
 }
