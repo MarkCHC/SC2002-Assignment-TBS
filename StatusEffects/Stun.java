@@ -27,7 +27,7 @@ public class Stun implements StatusEffect {
 
     @Override
     public int modifyIncomingDamage(int incomingDamage) {
-        return 0;
+        return incomingDamage;
     }
 
     @Override
