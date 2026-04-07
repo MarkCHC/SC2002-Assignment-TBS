@@ -17,6 +17,12 @@ public class SampleWizardAttack implements Item {
         return "Deals 40 damage. Defeating an enemy grants +10 permanent attack.";
     }
 
+    // Fulfilling the Item contract, but spells don't run out!
+    @Override
+    public int getQuantity() {
+        return 1;
+    }
+
     // Since our Item interface requires use(Player target), let's assume
     // the target here is the enemy, and we pass the Wizard to track the buff.
     // (Note: You might need to update your Item interface later to handle both a caster and a target!)
@@ -49,7 +55,5 @@ public class SampleWizardAttack implements Item {
     }
 
     @Override
-    public void use(Enemy target) {
-
-    }
+    public void use(Enemy target) {}
 }

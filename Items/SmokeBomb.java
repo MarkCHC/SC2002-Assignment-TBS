@@ -7,7 +7,11 @@ import Testing.Player;
 public class SmokeBomb implements Item{
 
     private int duration = 2;
-    private boolean isConsumed = false;
+    private int sbQuantity;
+
+    public SmokeBomb(int startingQuantity) {
+        this.sbQuantity = startingQuantity;
+    }
 
     @Override
     public String getName() {
@@ -20,27 +24,29 @@ public class SmokeBomb implements Item{
     }
 
     @Override
+    public int getQuantity() {
+        return this.sbQuantity;
+    }
+
+    @Override
     public void use(Enemy target) {}
     //here for fulfilling Item interface requirement
     //will be removed once skill is not implementing Item
 
     @Override
     public void use(Player target) {
-        if (this.isConsumed) {
-            System.out.println("Smoke Bomb has already been used");
+        if (this.sbQuantity <= 0) {
+            System.out.println("Out of Smoke Bombs!");
             return;
         }
 
-        System.out.println("Threw a " + getName() + "!");
+        System.out.println("Threw a " + getName() + " at their feet!");
 
         Stealth effect = new Stealth(this.duration);
         target.addStatusEffect(effect);
 
-        this.isConsumed = true;
-    }
-
-    public boolean isConsumed() {
-        return this.isConsumed;
+        this.sbQuantity--;
+        System.out.println("You have " + this.sbQuantity + " Smoke Bombs left.");
     }
 }
 

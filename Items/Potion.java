@@ -7,15 +7,25 @@ public class Potion implements Item {
 
     //private attribute(s)
     private int healamount = 100;
+    private int potionQuantity;
+
+    public Potion(int startingQuantity) {
+        this.potionQuantity = startingQuantity;
+    }
 
     @Override
     public String getName() {
-        return "Potion";
+        return "Potion (x" + this.potionQuantity + ")";
     }
 
     @Override
     public String getDescription() {
-        return "Restores 100 HP to player";
+        return "Restores 100 HP to player. Remaining: " + this.potionQuantity;
+    }
+
+    @Override
+    public int getQuantity() {
+        return this.potionQuantity;
     }
 
     @Override
@@ -25,6 +35,11 @@ public class Potion implements Item {
 
     @Override
     public void use(Player target) {
+        if (this.potionQuantity <= 0) {
+            System.out.println("Out of Potions!");
+            return;
+        }
+
         int currentHP = target.getHP();
         int maxHP = target.getMaxHP();
 
@@ -34,6 +49,9 @@ public class Potion implements Item {
             target.setHP(maxHP);
         }
 
+        this.potionQuantity--;
+
         System.out.println("Character HP Updated. New HP: " + target.getHP());
+        System.out.println("You have " + this.potionQuantity + " Potions left.");
     }
 }
