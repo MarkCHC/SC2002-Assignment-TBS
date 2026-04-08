@@ -45,16 +45,6 @@ public class Enemy {
         System.out.println("-> [" + this.name + "] gained effect: " + effect.getName());
     }
 
-    // Helper for Arcane Blast to check if the buff already exists
-    public ArcaneBoost getArcaneBoost() {
-        for (StatusEffect effect : this.activeEffects) {
-            if (effect instanceof ArcaneBoost) {
-                return (ArcaneBoost) effect;
-            }
-        }
-        return null;
-    }
-
     // Helper to check if the player is allowed to move (e.g., not Stunned)
     public boolean canAct() {
         for (StatusEffect effect : this.activeEffects) {
@@ -68,18 +58,19 @@ public class Enemy {
     // --- 2. Combat Mechanics ---
 
     // Standard attack calculating base damage + any buffs
+// Remove the getArcaneBoost() helper method entirely.
+
     public void attack(Player target) {
         if (!canAct()) {
             System.out.println(this.name + " is incapacitated and cannot attack!");
-            return; // Guard Clause
+            return;
         }
 
         int totalDamage = this.baseAttack;
 
-        // Add Arcane Boost damage if they have it
-        ArcaneBoost boost = getArcaneBoost();
-        if (boost != null) {
-            totalDamage += boost.getAttackBonus();
+        // Ask EVERY effect to modify the damage, just like you do in takeDamage()
+        for (StatusEffect effect : this.activeEffects) {
+            totalDamage = effect.modifyOutgoingDamage(totalDamage);
         }
 
         System.out.println(this.name + " attacks " + target.getName() + " for " + totalDamage + " damage!");
@@ -144,10 +135,10 @@ public class Enemy {
         // 2. Tick all Status Effects
         List<StatusEffect> expiredEffects = new ArrayList<>();
 
-        for (StatusEffect effect : this.activeEffects) {
+        // Iterate over a snapshot of the list
+        for (StatusEffect effect : new ArrayList<>(this.activeEffects)) {
             effect.passTurn();
 
-            // If the effect duration hit 0, mark it for removal
             if (!effect.isActive()) {
                 expiredEffects.add(effect);
                 System.out.println("-> " + effect.getName() + " has worn off " + this.name + ".");
