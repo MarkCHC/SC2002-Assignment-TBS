@@ -13,27 +13,22 @@ public class SmokeBomb implements Item{
         this.sbQuantity = startingQuantity;
     }
 
-    @Override
     public String getName() {
         return "Smoke Bomb";
     }
 
-    @Override
     public String getDescription() {
         return "Player is invulnerable for " + this.duration + " turns";
     }
 
-    @Override
     public int getQuantity() {
         return this.sbQuantity;
     }
 
-    @Override
     public void use(Enemy target) {}
     //here for fulfilling Item interface requirement
     //will be removed once skill is not implementing Item
 
-    @Override
     public void use(Player target) {
         if (this.sbQuantity <= 0) {
             System.out.println("Out of Smoke Bombs!");

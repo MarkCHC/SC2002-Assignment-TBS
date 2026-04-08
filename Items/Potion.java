@@ -13,27 +13,22 @@ public class Potion implements Item {
         this.potionQuantity = startingQuantity;
     }
 
-    @Override
     public String getName() {
         return "Potion (x" + this.potionQuantity + ")";
     }
 
-    @Override
     public String getDescription() {
         return "Restores 100 HP to player. Remaining: " + this.potionQuantity;
     }
 
-    @Override
     public int getQuantity() {
         return this.potionQuantity;
     }
 
-    @Override
     public void use(Enemy target){}
     //here for fulfilling Item interface requirement
     //will be removed once using combatant
 
-    @Override
     public void use(Player target) {
         if (this.potionQuantity <= 0) {
             System.out.println("Out of Potions!");
