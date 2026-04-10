@@ -1,13 +1,31 @@
 package game.entities;
-public class Player extends Combatant {
-    // assume all other stats here or inherited    
-    protected boolean player = true; //some sort of indicator
+import java.util.ArrayList;
+import java.util.List;
 
-    public Player() {
-        super(0);
+public abstract class Player extends Combatant {
+    private final List<String> startingItems;
+
+    protected Player(String name, int maxHp, int attack, int defense, int speed, String specialSkillName, String specialSkillDescription) {
+        super(name, maxHp, maxHp, attack, defense, speed, specialSkillName, specialSkillDescription);
+        this.startingItems = new ArrayList<>();
+    } // for Instantiation - 7 params
+
+    protected Player(String name, int maxHp, int currentHp, int attack, int defense, int speed, String specialSkillName, String specialSkillDescription) {
+        super(name, maxHp, currentHp, attack, defense, speed, specialSkillName, specialSkillDescription);
+        this.startingItems = new ArrayList<>();
+    } // for deep copy - 8 params
+
+    public abstract Player createCopy();
+
+    public Boolean isPlayer() {
+        return true;
     }
 
-    public Player(Player p) {
-        super(p.getSpeed());
+    public void addStartingItem(String itemName) {
+        startingItems.add(itemName);
+    }
+
+    public List<String> getStartingItems() {
+        return startingItems;
     }
 }

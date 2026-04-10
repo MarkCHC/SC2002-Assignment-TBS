@@ -1,7 +1,9 @@
-package game.entities;
+package game.logic;
 import java.util.List;
 import java.util.ArrayList;
-import game.logic.TurnOrderStrategy;
+
+import game.entities.Enemy;
+import game.entities.Player;
 
 public class State {
     private int round;
@@ -12,20 +14,20 @@ public class State {
 
     public State(int round) {
         this.round = round;
-        playerState = new ArrayList<>();
-        enemyState = new ArrayList<>();
-        wavesLeft = new ArrayList<>();
+        playerState = new ArrayList<Player>();
+        enemyState = new ArrayList<Enemy>();
+        wavesLeft = new ArrayList<Wave>();
     }
 
     public State(State s) {
         round = s.round;
         playerState = new ArrayList<>();
         for (Player p : s.getPlayerState()) {
-            this.playerState.add(new Player(p));
+            this.playerState.add(p.createCopy());
         }
         enemyState = new ArrayList<>();
         for (Enemy e : s.getEnemyState()) {
-            this.enemyState.add(new Enemy(e)); 
+            this.enemyState.add(e.createCopy()); 
         }
         wavesLeft = new ArrayList<>();
         for (Wave w : s.getWavesLeft()) {

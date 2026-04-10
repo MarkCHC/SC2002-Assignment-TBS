@@ -1,21 +1,11 @@
 package game.entities;
 
-import game.logic.EnemyBehavior;
-
-public class Warrior extends Player {
-    public Warrior() {
-        super(
-            "Warrior", 
-            260, 
-            40, 
-            20, 
-            30, 
-            "Shield Bash", 
-            "Deal basic attack to one enemy and stun it for the current turn and the next turn."
-        );
+public class Wizard extends Player {
+    public Wizard() {
+        super("Wizard", 200, 50, 10, 20, "Arcane Blast", "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level.");
     }
 
-    public Warrior(
+    public Wizard(
         String name, 
         int maxHp, 
         int currentHp, 
@@ -29,8 +19,8 @@ public class Warrior extends Player {
         super(name, maxHp, currentHp, attack, defense, speed, specialSkillName, specialSkillNameDescription);
     }
 
-    public Warrior createCopy() {
-        return new Warrior(
+    public Wizard createCopy() {
+        return new Wizard(
             this.getName(), 
             this.getMaxHp(), 
             this.getHp(), 

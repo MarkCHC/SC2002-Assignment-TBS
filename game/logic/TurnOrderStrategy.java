@@ -1,9 +1,7 @@
 package game.logic;
 import java.util.List;
 import java.util.ArrayList;
-
 import game.entities.Combatant;
-import game.entities.State;
 
 public class TurnOrderStrategy {
     private List<Combatant> turnOrder;

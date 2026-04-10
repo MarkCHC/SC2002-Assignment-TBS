@@ -3,25 +3,32 @@ import java.util.List;
 import game.entities.Combatant;
 import game.entities.Enemy;
 import game.entities.Player;
-import game.entities.Wave;
-import game.entities.State;
 import game.logic.BattleEngine;
+import game.logic.LevelDifficulty;
+import game.logic.LevelFactory;
+import game.logic.PlayerType;
+import game.logic.State;
+import game.logic.Wave;
 import game.ui.*;
 
 public class TurnBasedApp {
     public static void main() {
         // Initiation
         Initiation.showLoadingScreen();
-        List<Wave> initWaves = Initiation.chooseDifficulty();
-        List<Player> initCharacters = new ArrayList<Player>(); // ?
+        LevelDifficulty difficulty = Initiation.chooseDifficulty();
+        List<Wave> initWaves = LevelFactory.createWaves(difficulty);
+        List<Player> initCharacters = new ArrayList<Player>(1);
         for (Player character: initCharacters) {
-            character = Initiation.chooseClass();
+            PlayerType classType = Initiation.chooseClass();
+            character = classType.createPlayer();
         }
-        Initiation.chooseItems();
+        Initiation.chooseItems(); // implement later
         State initialState = new State(0);
         initialState.initialize(initCharacters, initWaves);
         BattleEngine.getStates().add(0, initialState);
+        System.out.println("=================== GAME SETUP COMPLETE ========================");
         System.out.println("Game Initialized.");
+
         // Battling
         do { // condition probably look at enemies in current wave & wavesLeft
             // new round = new state (deep copy)
@@ -31,10 +38,13 @@ public class TurnBasedApp {
             // }
             // if wave cleared
             if (!BattleEngine.isWaveAlive(s)) { // replenish wave
+                System.out.println("Replenishing waves");
                 Wave wave = BattleEngine.getNextWave(s);
                 for (Enemy e: wave.getEnemies()) {
-                    s.getEnemyState().add(new Enemy(e));
+                    s.getEnemyState().add(e.createCopy());
                 }
+                System.out.println("Enemies left: "+ s.getEnemyState().size());
+                System.out.println("Waves left: " + s.getWavesLeft().size());
             }
             // get next Combatant in TO
             Combatant c = s.getTurnOrderStrategy().getNextCombatant();
