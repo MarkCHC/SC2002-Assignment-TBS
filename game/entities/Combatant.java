@@ -1,4 +1,7 @@
 package game.entities;
+import java.util.List;
+import java.util.ArrayList;
+import game.entities.StatusEffect.StatusEffect;
 
 public abstract class Combatant {
     // the current special skill is just to simulate the name & description
@@ -7,6 +10,7 @@ public abstract class Combatant {
     private final String name, specialSkillName, specialSkillDescription;
     private final int maxHp, attack, defense, speed;
     private int hp;
+    protected List<StatusEffect> activeEffects = new ArrayList<>();
 
     protected Combatant(String name, int maxHp, int hp, int attack, int defense, int speed, String specialSkillName, String specialSkillDescription) {
         this.name = name;
@@ -55,6 +59,10 @@ public abstract class Combatant {
         return speed;
     }
 
+    public List<StatusEffect> getActiveEffects() {
+        return activeEffects;
+    }
+
     public boolean isAlive() {
         return hp > 0;
     }
@@ -67,5 +75,17 @@ public abstract class Combatant {
     
     public void heal(int amount){
         hp = Math.max(hp + amount, maxHp);
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void addStatusEffect(StatusEffect effect) {
+        activeEffects.add(effect);
+    }
+
+    public void triggerSpecialSkill() {
+        
     }
 }

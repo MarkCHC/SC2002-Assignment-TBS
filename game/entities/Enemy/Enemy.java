@@ -1,4 +1,5 @@
-package game.entities;
+package game.entities.Enemy;
+import game.entities.Combatant;
 import game.logic.EnemyBehavior;
 
 public abstract class Enemy extends Combatant {

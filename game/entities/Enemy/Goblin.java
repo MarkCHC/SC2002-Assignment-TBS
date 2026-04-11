@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.Enemy;
 import game.logic.EnemyBehavior;
 
 public class Goblin extends Enemy {

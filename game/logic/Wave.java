@@ -1,7 +1,9 @@
 package game.logic;
 import java.util.List;
+
+import game.entities.Enemy.Enemy;
+
 import java.util.ArrayList;
-import game.entities.Enemy;
 
 public class Wave {
     // private int waveNumber;

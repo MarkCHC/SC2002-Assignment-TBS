@@ -1,8 +1,8 @@
 package game.logic;
 
-import game.entities.Player;
-import game.entities.Warrior;
-import game.entities.Wizard;
+import game.entities.Player.Player;
+import game.entities.Player.Warrior;
+import game.entities.Player.Wizard;
 
 public enum PlayerType {
     WARRIOR {

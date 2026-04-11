@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.Player;
 
 import game.logic.EnemyBehavior;
 

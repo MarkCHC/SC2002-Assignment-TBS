@@ -1,6 +1,6 @@
 package game.logic;
-import game.entities.Enemy;
-import game.entities.Player;
+import game.entities.Enemy.Enemy;
+import game.entities.Player.Player;
 
 public interface EnemyBehavior {
     String getName();

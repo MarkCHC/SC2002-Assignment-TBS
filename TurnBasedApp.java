@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import game.entities.Combatant;
-import game.entities.Enemy;
-import game.entities.Player;
+import game.entities.Enemy.Enemy;
+import game.entities.Player.Player;
 import game.logic.BattleEngine;
 import game.logic.LevelDifficulty;
 import game.logic.LevelFactory;

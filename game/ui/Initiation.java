@@ -62,5 +62,21 @@ public class Initiation {
 
     public static void chooseItems() { // choose 2 items
         int startingItemCount = 2;
+        // System.out.println("Select items:");
+
+        // System.out.print(">> ");
+        // Scanner scanner = new Scanner(System.in);
+        // int choice = scanner.nextInt();
+    }
+
+    public static void displayActions() {
+        System.out.println("Choose action:");
+        System.out.println("1. Attack");
+        System.out.println("2. Use Item");
+        System.out.println("3. Defend");
+
+        // System.out.print(">> ");
+        // Scanner scanner = new Scanner(System.in);
+        // int choice = scanner.nextInt();
     }
 }

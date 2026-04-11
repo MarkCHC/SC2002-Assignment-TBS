@@ -2,8 +2,8 @@ package game.logic;
 import java.util.List;
 import java.util.ArrayList;
 
-import game.entities.Enemy;
-import game.entities.Player;
+import game.entities.Enemy.Enemy;
+import game.entities.Player.Player;
 
 public class State {
     private int round;

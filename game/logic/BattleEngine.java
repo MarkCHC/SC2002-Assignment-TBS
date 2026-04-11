@@ -2,8 +2,8 @@ package game.logic;
 import java.util.ArrayList;
 import java.util.List;
 import game.entities.Combatant;
-import game.entities.Enemy;
-import game.entities.Player;
+import game.entities.Enemy.Enemy;
+import game.entities.Player.Player;
 
 public class BattleEngine {
     private static int round = 1;

@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.Player;
 
 public class Wizard extends Player {
     public Wizard() {
