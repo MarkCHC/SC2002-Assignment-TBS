@@ -1,16 +1,19 @@
 package game.entities.Item;
-
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
 import game.entities.StatusEffect.Stealth;
 
-public class SmokeBomb implements Item{
+public class SmokeBomb implements Item {
 
     private int duration = 2;
     private int sbQuantity;
 
     public SmokeBomb(int startingQuantity) {
         this.sbQuantity = startingQuantity;
+    }
+
+    public String getLabel() {
+        return "SMOKE_BOMB";
     }
 
     public String getName() {

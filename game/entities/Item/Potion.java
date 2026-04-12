@@ -1,5 +1,4 @@
 package game.entities.Item;
-
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
 
@@ -11,6 +10,10 @@ public class Potion implements Item {
 
     public Potion(int startingQuantity) {
         this.potionQuantity = startingQuantity;
+    }
+
+    public String getLabel() {
+        return "POTION";
     }
 
     public String getName() {

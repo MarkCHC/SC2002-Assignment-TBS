@@ -1,4 +1,4 @@
-package game.logic.Action;
+package game.logic.Action.Player;
 import java.util.List;
 import game.entities.Combatant;
 import game.entities.StatusEffect.DefendEffect;

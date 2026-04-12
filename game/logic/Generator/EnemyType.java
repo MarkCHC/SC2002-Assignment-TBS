@@ -1,8 +1,8 @@
-package game.logic;
-
+package game.logic.Generator;
 import game.entities.Enemy.Enemy;
 import game.entities.Enemy.Goblin;
 import game.entities.Enemy.Wolf;
+import game.logic.Action.Enemy.BasicAttackBehavior;
 
 public enum EnemyType {
     GOBLIN("Goblin") {

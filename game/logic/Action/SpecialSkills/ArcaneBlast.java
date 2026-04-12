@@ -3,9 +3,29 @@ import java.util.List;
 import game.entities.Combatant;
 import game.entities.StatusEffect.StatusEffect;
 import game.entities.StatusEffect.ArcaneBoost;
-import game.logic.Action.SpecialSkill;
 
 public class ArcaneBlast extends SpecialSkill {
+
+    public ArcaneBlast() {
+        super(
+            "Shield Bash", 
+            "Deal basic attack to one enemy and stun it for the current turn and the next turn."
+        );
+    };
+
+    public ArcaneBlast(int cooldown) {
+        super(
+            "Shield Bash", 
+            "Deal basic attack to one enemy and stun it for the current turn and the next turn.",
+            cooldown
+        );
+    }; // deep copy
+
+    public SpecialSkill getCopy() {
+        return new ArcaneBlast(
+            this.getRemainingCooldown()
+        );
+    }
 
     @Override
     protected void performSkill(Combatant actor, List<Combatant> targets) {

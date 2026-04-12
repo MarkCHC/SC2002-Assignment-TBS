@@ -1,4 +1,4 @@
-package game.logic;
+package game.logic.Action.Enemy;
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
 

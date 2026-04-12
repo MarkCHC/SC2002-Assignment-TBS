@@ -1,12 +1,12 @@
-package game.logic;
+package game.logic.Level;
 import java.util.List;
 import java.util.ArrayList;
-
 import game.entities.Enemy.Enemy;
 import game.entities.Enemy.Goblin;
 import game.entities.Enemy.Wolf;
-import game.logic.EnemyBehavior;
-import game.logic.Wave;
+import game.logic.Action.Enemy.BasicAttackBehavior;
+import game.logic.Action.Enemy.EnemyBehavior;
+import game.logic.Round.Wave;
 
 public class LevelFactory {
 

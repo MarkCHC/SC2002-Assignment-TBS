@@ -1,5 +1,4 @@
-package game.logic;
-
+package game.logic.Generator;
 import game.entities.Player.Player;
 import game.entities.Player.Warrior;
 import game.entities.Player.Wizard;
@@ -25,7 +24,7 @@ public enum PlayerType {
                 + " ATK:" + player.getAttack()
                 + " DEF:" + player.getDefense()
                 + " SPD:" + player.getSpeed()
-                + " | Skill: " + player.getSpecialSkillName()
-                + " - " + player.getSpecialSkillDescription();
+                + " | Skill: " + player.getSpecialSkill().getSpecialSkillName()
+                + " - " + player.getSpecialSkill().getSpecialSkillDescription();
     }
 }

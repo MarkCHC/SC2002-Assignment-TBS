@@ -1,5 +1,5 @@
 package game.entities.Enemy;
-import game.logic.EnemyBehavior;
+import game.logic.Action.Enemy.EnemyBehavior;
 
 public class Wolf extends Enemy {
     public Wolf(String name, EnemyBehavior behavior) {

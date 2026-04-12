@@ -1,8 +1,6 @@
-package game.logic;
+package game.logic.Round;
 import java.util.List;
-
 import game.entities.Enemy.Enemy;
-
 import java.util.ArrayList;
 
 public class Wave {

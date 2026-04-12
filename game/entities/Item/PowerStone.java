@@ -1,5 +1,4 @@
 package game.entities.Item;
-
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
 
@@ -9,6 +8,10 @@ public class PowerStone implements Item {
 
     public PowerStone(int startingQuantity) {
         this.psQuantity = startingQuantity;
+    }
+
+    public String getLabel() {
+        return "POWER_STONE";
     }
 
     public String getName() {

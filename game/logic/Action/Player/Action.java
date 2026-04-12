@@ -1,5 +1,4 @@
-package game.logic.Action;
-
+package game.logic.Action.Player;
 import game.entities.Combatant;
 import java.util.List;
 

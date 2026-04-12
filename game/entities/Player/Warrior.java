@@ -1,6 +1,6 @@
 package game.entities.Player;
-
-import game.logic.EnemyBehavior;
+import game.logic.Action.SpecialSkills.SpecialSkill;
+import game.logic.Action.SpecialSkills.ShieldBash;
 
 public class Warrior extends Player {
     public Warrior() {
@@ -9,9 +9,8 @@ public class Warrior extends Player {
             260, 
             40, 
             20, 
-            30, 
-            "Shield Bash", 
-            "Deal basic attack to one enemy and stun it for the current turn and the next turn."
+            30,
+            new ShieldBash()
         );
     }
 
@@ -22,11 +21,10 @@ public class Warrior extends Player {
         int attack, 
         int defense, 
         int speed, 
-        String specialSkillName, 
-        String specialSkillNameDescription
+        SpecialSkill sp
     ) 
     {
-        super(name, maxHp, currentHp, attack, defense, speed, specialSkillName, specialSkillNameDescription);
+        super(name, maxHp, currentHp, attack, defense, speed, sp);
     }
 
     public Warrior createCopy() {
@@ -37,8 +35,7 @@ public class Warrior extends Player {
             this.getAttack(), 
             this.getDefense(), 
             this.getSpeed(), 
-            this.getSpecialSkillName(),
-            this.getSpecialSkillDescription()
+            this.getSpecialSkill().getCopy()
         );
     }
 }

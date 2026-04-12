@@ -1,8 +1,17 @@
 package game.entities.Player;
+import game.logic.Action.SpecialSkills.SpecialSkill;
+import game.logic.Action.SpecialSkills.ArcaneBlast;
 
 public class Wizard extends Player {
     public Wizard() {
-        super("Wizard", 200, 50, 10, 20, "Arcane Blast", "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level.");
+        super(
+            "Wizard", 
+            200, 
+            50, 
+            10, 
+            20,
+            new ArcaneBlast()
+        );
     }
 
     public Wizard(
@@ -12,11 +21,10 @@ public class Wizard extends Player {
         int attack, 
         int defense, 
         int speed, 
-        String specialSkillName, 
-        String specialSkillNameDescription
+        SpecialSkill sp
     ) 
     {
-        super(name, maxHp, currentHp, attack, defense, speed, specialSkillName, specialSkillNameDescription);
+        super(name, maxHp, currentHp, attack, defense, speed, sp);
     }
 
     public Wizard createCopy() {
@@ -27,8 +35,7 @@ public class Wizard extends Player {
             this.getAttack(), 
             this.getDefense(), 
             this.getSpeed(), 
-            this.getSpecialSkillName(),
-            this.getSpecialSkillDescription()
+            this.getSpecialSkill().getCopy()
         );
     }
 }

@@ -1,13 +1,32 @@
-package game.logic.Action;
+package game.logic.Action.SpecialSkills;
 import java.util.List;
 import game.entities.Combatant;
+import game.logic.Action.Player.Action;
 
 public abstract class SpecialSkill implements Action {
 
     private static final int COOLDOWN = 3;
     private int remainingCooldown = 0;
-    // move name here
-    // move description here
+    private final String specialSkillName, specialSkillDescription;
+
+    protected SpecialSkill(String specialSkillName, String specialSkillDescription) {
+        this.specialSkillName = specialSkillName;
+        this.specialSkillDescription = specialSkillDescription;
+    }
+
+    protected SpecialSkill(String spName, String spDesc, int cd) {
+        this.specialSkillName = spName;
+        this.specialSkillDescription = spDesc;
+        this.remainingCooldown = cd;
+    } // for deep copy
+
+    public String getSpecialSkillName() {
+        return specialSkillName;
+    };
+
+    public String getSpecialSkillDescription() {
+        return specialSkillDescription;
+    };
 
     public boolean isAvailable() {
         return remainingCooldown == 0;
@@ -42,4 +61,5 @@ public abstract class SpecialSkill implements Action {
 
     // Subclasses implement this — not execute() directly
     protected abstract void performSkill(Combatant actor, List<Combatant> targets);
+    public abstract SpecialSkill getCopy();
 }

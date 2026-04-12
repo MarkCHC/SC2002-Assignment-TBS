@@ -2,25 +2,26 @@ package game.entities;
 import java.util.List;
 import java.util.ArrayList;
 import game.entities.StatusEffect.StatusEffect;
+import game.logic.Action.SpecialSkills.SpecialSkill;
 
 public abstract class Combatant {
     // the current special skill is just to simulate the name & description
     // need special skill description and name inside the SpecialSkill class
     // along with it's getter method if private, in the actual implementation
-    private final String name, specialSkillName, specialSkillDescription;
+    private final String name;
     private final int maxHp, attack, defense, speed;
     private int hp;
+    private SpecialSkill specialSkill;
     protected List<StatusEffect> activeEffects = new ArrayList<>();
 
-    protected Combatant(String name, int maxHp, int hp, int attack, int defense, int speed, String specialSkillName, String specialSkillDescription) {
+    protected Combatant(String name, int maxHp, int hp, int attack, int defense, int speed, SpecialSkill sp) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = hp;
         this.attack = attack;
         this.defense = defense;
         this.speed = speed;
-        this.specialSkillName = specialSkillName;
-        this.specialSkillDescription = specialSkillDescription;
+        this.specialSkill = sp;
     }
 
     protected abstract Combatant createCopy();
@@ -29,14 +30,6 @@ public abstract class Combatant {
 
     public String getName() {
         return name;
-    }
-
-    public String getSpecialSkillName() {
-        return specialSkillName;
-    }
-
-    public String getSpecialSkillDescription() {
-        return specialSkillDescription;
     }
 
     public int getMaxHp() {
@@ -57,6 +50,10 @@ public abstract class Combatant {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public SpecialSkill getSpecialSkill() {
+        return specialSkill;
     }
 
     public List<StatusEffect> getActiveEffects() {

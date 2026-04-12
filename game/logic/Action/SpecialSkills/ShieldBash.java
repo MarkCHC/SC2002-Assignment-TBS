@@ -2,9 +2,29 @@ package game.logic.Action.SpecialSkills;
 import java.util.List;
 import game.entities.Combatant;
 import game.entities.StatusEffect.Stun;
-import game.logic.Action.SpecialSkill;
 
 public class ShieldBash extends SpecialSkill {
+
+    public ShieldBash() {
+        super(
+            "Arcane Blast",
+            "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level."
+        );
+    }
+
+    public ShieldBash(int cooldown) {
+        super(
+            "Arcane Blast",
+            "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level.",
+            cooldown
+        );
+    }
+
+    public SpecialSkill getCopy() {
+        return new ShieldBash(
+            this.getRemainingCooldown()
+        );
+    }
 
     @Override
     protected void performSkill(Combatant actor, List<Combatant> targets) {
