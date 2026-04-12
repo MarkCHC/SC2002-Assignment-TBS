@@ -8,15 +8,15 @@ public class ArcaneBlast extends SpecialSkill {
 
     public ArcaneBlast() {
         super(
-            "Shield Bash", 
-            "Deal basic attack to one enemy and stun it for the current turn and the next turn."
+            "Arcane Blast", 
+            "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level."
         );
     };
 
     public ArcaneBlast(int cooldown) {
         super(
-            "Shield Bash", 
-            "Deal basic attack to one enemy and stun it for the current turn and the next turn.",
+            "Arcane Blast", 
+            "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level.",
             cooldown
         );
     }; // deep copy

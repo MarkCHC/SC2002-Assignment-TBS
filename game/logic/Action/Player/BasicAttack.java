@@ -5,7 +5,7 @@ import game.entities.Combatant;
 
 public class BasicAttack implements Action {
 
-    @Override
+    // @Override
     public void execute(Combatant actor, List<Combatant> targets) {
         Combatant target = targets.get(0);
 

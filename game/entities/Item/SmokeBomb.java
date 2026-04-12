@@ -1,9 +1,12 @@
 package game.entities.Item;
-import game.entities.Enemy.Enemy;
-import game.entities.Player.Player;
+import java.util.List;
+import game.logic.Action.Player.Action;
+import game.entities.Combatant;
+// import game.entities.Enemy.Enemy;
+// import game.entities.Player.Player;
 import game.entities.StatusEffect.Stealth;
 
-public class SmokeBomb implements Item {
+public class SmokeBomb implements Item, Action {
 
     private int duration = 2;
     private int sbQuantity;
@@ -28,11 +31,12 @@ public class SmokeBomb implements Item {
         return this.sbQuantity;
     }
 
-    public void use(Enemy target) {}
-    //here for fulfilling Item interface requirement
-    //will be removed once skill is not implementing Item
+    // public void use(Enemy target) {}
+    // //here for fulfilling Item interface requirement
+    // //will be removed once skill is not implementing Item
 
-    public void use(Player target) {
+    public void execute(Combatant target, List<Combatant> None) {
+    // public void use(Player target) {
         if (this.sbQuantity <= 0) {
             System.out.println("Out of Smoke Bombs!");
             return;

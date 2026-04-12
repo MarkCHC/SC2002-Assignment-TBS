@@ -2,6 +2,7 @@ package game.logic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Iterator;
 import game.entities.Combatant;
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
@@ -16,17 +17,35 @@ public class BattleEngine {
         return states;
     }
 
-    // public static void handlePlayerActions();
-
     public static void showEnemyActions() {
         try {
-            Thread.sleep(3000); // simulate loading
+            Thread.sleep(1000); // simulate loading
         } catch (InterruptedException e) {
             System.out.println("Loading interrupted");
         }
     }
 
     public static void executePlayerAction() {}
+
+    public static void removeDead() {
+        State s = states.get(states.size()-1);
+        Iterator<Enemy> it = s.getEnemyState().iterator();
+        while (it.hasNext()) {
+            Combatant e = it.next();
+            if (!e.isAlive()) {
+                it.remove();
+                System.out.println(e.getName()+" has died.");
+            }
+        }
+        Iterator<Player> it2 = s.getPlayerState().iterator();
+        while (it2.hasNext()) {
+            Combatant e = it2.next();
+            if (!e.isAlive()) {
+                it2.remove();
+                System.out.println(e.getName()+" has died.");
+            }
+        }
+    }
 
     public static void endTurn(State s) {
         states.add(s);
@@ -44,8 +63,6 @@ public class BattleEngine {
         State s = states.get(states.size()-1);
         return s.getTurnOrderStrategy().getTurnLog();
     }
-
-    // public static void 
 
     public static State nextState() { // deep copy from last state
         State s = states.get(states.size()-1);
@@ -89,6 +106,14 @@ public class BattleEngine {
     }
     
     public static boolean isPlayerAlive() {
+        State s = states.get(states.size()-1);
+        if (s.getPlayerState().size() == 0) {
+            return false;
+        }
         return true;
+    }
+
+    public static void restartGame() {
+        
     }
 }

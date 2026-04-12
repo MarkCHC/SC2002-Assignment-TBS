@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import game.entities.Combatant;
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
+import game.entities.Player.Warrior;
 import game.entities.Item.Item;
 import game.logic.BattleEngine;
 import game.logic.Generator.PlayerType;
@@ -11,6 +14,8 @@ import game.logic.Level.LevelFactory;
 import game.logic.Round.State;
 import game.logic.Round.TurnOrderStrategy;
 import game.logic.Round.Wave;
+import game.logic.Action.Player.Action;
+import game.logic.Action.Player.ActionList;
 import game.ui.*;
 
 public class TurnBasedApp {
@@ -48,7 +53,7 @@ public class TurnBasedApp {
                 }
                 s.resetMap(); // check if still need pass
                 BattleEngine.endTurn(s);
-                // BattleEngine.endRound();
+                System.out.println("<<<<<<<<<<<<<<<<<<<<<< NEW WAVE SPAWNED >>>>>>>>>>>>>>>>>>>>>>>>>>");
                 // pass this iteration because turnOrder would be empty if its duping from a empty enemy state
                 continue;
             }
@@ -57,13 +62,15 @@ public class TurnBasedApp {
 
             // get next Combatant in TO
             Combatant c = s.getTurnOrderStrategy().getNextCombatant();
-            // System.out.println(c);
             System.out.println(c.getName()+"'s turn");
             if (c.isPlayer()) {
                 GameUI.showPlayerActions(c); // display actions available
-                GameUI.choosePlayerAction(s); // ask for user input
-                // execute action
-                // BattleEngine
+                Map.Entry<Action, Integer> result;
+                do {
+                    result = GameUI.choosePlayerAction(s, c); // ask for user input
+                } while (result == null);
+                List<Combatant> e = GameUI.choosePlayerTarget(s, result);
+                result.getKey().execute(c, e); // execute action
             } else {
                 // logic to select behaviour
                 BattleEngine.showEnemyActions();
@@ -72,24 +79,26 @@ public class TurnBasedApp {
             // end turn
             s.getTurnOrderStrategy().endTurn(); // remove from TO
             BattleEngine.endTurn(s); // adds modified state
+            BattleEngine.removeDead();
             // consider if the action is actually working,
             //     if the turnOrder returns pointer to same object as those in the State
-            System.out.println(s.getTurnOrderStrategy().getTurnOrder().size());
+            // System.out.println(s.getTurnOrderStrategy().getTurnOrder().size());
 
             // Checks for Game Over
-            if (!BattleEngine.isPlayerAlive() || !BattleEngine.areThereEnemiesLeft()) { // either this breaks or while true loop
-                // some logic
+            if (!BattleEngine.areThereEnemiesLeft()) {
                 GameCompletion.playerWin();
                 System.out.println("Player win, game ends.");
                 System.out.println("Option to restart. Declined.");
-                System.out.print("Safely Completed.");
+                // play again logic - reset to first state
                 break;
-                // GameCompletion.playerLose();
+            }
+            if (!BattleEngine.isPlayerAlive()) {
+                GameCompletion.playerLose();
+                System.out.println("Player lose, game ends.");
+                System.out.println("Option to restart. Declined.");
+                break;
                 // play again logic - reset to first state
             }
-            // break;
-        } while (true);
-        // } while (BattleEngine.isWaveAlive() || BattleEngine.areThereEnemiesLeft());
-        // condition probably look at enemies in current wave & wavesLeft
+        } while (true); // this checks for restart logic
     }
 }

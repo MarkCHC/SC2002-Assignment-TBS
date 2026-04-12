@@ -7,18 +7,18 @@ public class ShieldBash extends SpecialSkill {
 
     public ShieldBash() {
         super(
-            "Arcane Blast",
-            "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level."
+            "Shield Bash", 
+            "Deal basic attack to one enemy and stun it for the current turn and the next turn."
         );
-    }
+    };
 
     public ShieldBash(int cooldown) {
         super(
-            "Arcane Blast",
-            "Deal basic attack to all enemies. For each enemy defeated, +10 attack until end of the level.",
+            "Shield Bash", 
+            "Deal basic attack to one enemy and stun it for the current turn and the next turn.",
             cooldown
         );
-    }
+    }; // deep copy
 
     public SpecialSkill getCopy() {
         return new ShieldBash(

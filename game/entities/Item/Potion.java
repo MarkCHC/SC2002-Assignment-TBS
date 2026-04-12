@@ -1,8 +1,11 @@
 package game.entities.Item;
-import game.entities.Enemy.Enemy;
-import game.entities.Player.Player;
+import java.util.List;
+import game.logic.Action.Player.Action;
+import game.entities.Combatant;
+// import game.entities.Enemy.Enemy;
+// import game.entities.Player.Player;
 
-public class Potion implements Item {
+public class Potion implements Item, Action {
 
     //private attribute(s)
     private int healamount = 100;
@@ -28,11 +31,12 @@ public class Potion implements Item {
         return this.potionQuantity;
     }
 
-    public void use(Enemy target){}
-    //here for fulfilling Item interface requirement
-    //will be removed once using combatant
+    // public void use(Enemy target){}
+    // //here for fulfilling Item interface requirement
+    // //will be removed once using combatant
 
-    public void use(Player target) {
+    public void execute(Combatant target, List<Combatant> None) {
+    // public void use(Player target) {
         if (this.potionQuantity <= 0) {
             System.out.println("Out of Potions!");
             return;

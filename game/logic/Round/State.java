@@ -7,6 +7,7 @@ import game.entities.Enemy.Enemy;
 import game.entities.Item.Item;
 import game.entities.Item.ItemList;
 import game.entities.Player.Player;
+import game.logic.Action.Player.Action;
 
 public class State {
     private int round;
@@ -74,6 +75,13 @@ public class State {
 
     public List<Item> getInventory() {
         return inventory;
+    }
+
+    public List<Action> getUsableInventory() {
+        return inventory.stream()
+                    .filter(i -> i instanceof Action)
+                    .map(i -> (Action) i)
+                    .toList();
     }
 
     public TurnOrderStrategy getTurnOrderStrategy() {
