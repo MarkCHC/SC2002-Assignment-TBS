@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Scanner;
 import game.entities.Combatant;
 import game.entities.Player.Player;
+import game.entities.StatusEffect.StatusEffect;
 import game.entities.Enemy.Enemy;
 import game.entities.Item.Item;
+import game.entities.Item.ItemList;
 import game.logic.Round.State;
 import game.logic.Action.Player.Action;
 import game.logic.Action.Player.BasicAttack;
@@ -23,9 +25,28 @@ public class GameUI {
                 target = pickEnemy(s.getEnemyState()); // pick enemy
                 cList.add(target);
                 return cList;
+            case 2: // Defend
+                return null; // don't need second target
+            case 3: // Item
+                Item i = (Item)res.getKey();
+                if (i.getLabel() == ItemList.POWER_STONE.create(0).getLabel()) {
+                     // shd have better way of implementing but works for now
+                     // right now fetching player from state but there could be multiple
+                    if (s.getPlayerState().get(0)
+                    .getSpecialSkill().getSpecialSkillName() == "Arcane Blast") {
+                        for (Combatant c: s.getEnemyState()) {
+                            cList.add(c);
+                        }
+                    } else {
+                        target = pickEnemy(s.getEnemyState()); // pick enemy
+                        cList.add(target);
+                    }
+                    return cList;
+                }
+                return null; // don't need second target
             case 4: // Special Skill
                 SpecialSkill sp = (SpecialSkill)res.getKey();
-                if (sp.getSpecialSkillName() == "Arcane Blast") {
+                if (sp.getSpecialSkillName() == "Arcane Blast") { // shd have better way of implementing
                     for (Combatant c: s.getEnemyState()) {
                         cList.add(c);
                     }
@@ -34,9 +55,6 @@ public class GameUI {
                     cList.add(target);
                 }   
                 return cList;
-            case 2: // Defend
-            case 3: // Item
-                return null; // don't need second target
             default:
                 return null;
         }
@@ -52,16 +70,18 @@ public class GameUI {
                 return new AbstractMap.SimpleEntry<>(new Defend(), 2);
             case 3: // eg. Items
                 showInventory(s.getInventory());
-                int items = 0;
+                int items = 0; // available items
+                int count = 0; // total quantity of all items
                 for (Item i: s.getInventory()) {
-                    items += i.getQuantity();
+                    count += i.getQuantity();
+                    items += (i.getQuantity() > 0 ? 1 : 0);
                 }
-                if (items > 0) {
-                    target = askInput("Item", 0, s.getInventory().size());
+                if (count > 0) {
+                    target = askInput("Item", 0, items);
                     return (target == 0)? 
                         null 
                         : 
-                        new AbstractMap.SimpleEntry<>(s.getUsableInventory().get(target-1), 3);
+                        new AbstractMap.SimpleEntry<>(s.getUsableInventory().get(target), 3);
                 } else {
                     return null;
                 }
@@ -109,7 +129,9 @@ public class GameUI {
     }
 
     // HELPER FUNCTIONS
-    public static Enemy pickEnemy(List<Enemy> enemies) {
+    // private static handleAOE() {}
+
+    private static Enemy pickEnemy(List<Enemy> enemies) {
         System.out.println("Select enemy to attack:");
         int choice = 1;
         for (Enemy e: enemies) {
@@ -122,7 +144,7 @@ public class GameUI {
         return enemies.get(choice-1);
     }
 
-    public static void showInventory(List<Item> inventory) {
+    private static void showInventory(List<Item> inventory) {
         Boolean avail = false;
         int target = 1;
         System.out.println("Inventory:");
@@ -132,6 +154,7 @@ public class GameUI {
                 System.out.print(target + ". ");
                 System.out.println(i.getName());
                 avail = true;
+                target++;
             }
         }
         if (!avail) {
@@ -141,27 +164,41 @@ public class GameUI {
         }
     }
 
-    public static void displayPlayerState(List<Player> players) {
+    private static void displayPlayerState(List<Player> players) {
         for (Player p: players) {
-            System.out.println(
+            System.out.print(
                 p.getName()
                 + "  HP:" + p.getHp()
                 + "/" + p.getMaxHp()
+                + "         "                
             );
+            displayStatusEffects(p);
+            System.out.println();
         }
     }
 
-    public static void displayEnemyState(List<Enemy> enemies) {
+    private static void displayEnemyState(List<Enemy> enemies) {
         for (Enemy e: enemies) {
-            System.out.println(
+            System.out.print(
                 e.getName()
                 + "  HP:" + e.getHp()
                 + "/" + e.getMaxHp()
+                + "         "
             );
+            displayStatusEffects(e);
+            System.out.println();
         }
     }
 
-    public static int askInput(String info, int start, int end) {
+    private static void displayStatusEffects(Combatant c) {
+        // System.out.print(c.getActiveEffects());
+        for (StatusEffect se: c.getActiveEffects()) {
+            if (se.isActive())
+                System.out.print("["+se.getName()+"]");
+        }
+    }
+
+    private static int askInput(String info, int start, int end) {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {

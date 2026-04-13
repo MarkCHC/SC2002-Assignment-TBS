@@ -1,4 +1,7 @@
 package game.entities.Enemy;
+import java.util.List;
+import java.util.ArrayList;
+import game.entities.StatusEffect.StatusEffect;
 import game.logic.Action.Enemy.EnemyBehavior;
 
 public class Wolf extends Enemy {
@@ -6,11 +9,15 @@ public class Wolf extends Enemy {
         super(name, 40, 45, 5, 35, behavior);
     }
 
-    public Wolf(String name, int maxHp, int currentHp, int attack, int defense, int speed, EnemyBehavior behavior) {
-        super(name, maxHp, currentHp, attack, defense, speed, behavior);
+    public Wolf(String name, int maxHp, int currentHp, int attack, int defense, int speed, EnemyBehavior behavior, List<StatusEffect> se) {
+        super(name, maxHp, currentHp, attack, defense, speed, behavior, se);
     }
 
     public Wolf createCopy() {
+        List<StatusEffect> sList = new ArrayList<>();
+        for (StatusEffect se: activeEffects) {
+            sList.add(se.getCopy());
+        }
         return new Wolf(
             this.getName(), 
             this.getMaxHp(), 
@@ -18,7 +25,8 @@ public class Wolf extends Enemy {
             this.getAttack(), 
             this.getDefense(), 
             this.getSpeed(), 
-            this.getBehavior() // need new
+            this.getBehavior(), // need new
+            sList
         );
     }
 }

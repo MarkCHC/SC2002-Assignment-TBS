@@ -5,17 +5,14 @@ import java.util.Map;
 import game.entities.Combatant;
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
-import game.entities.Player.Warrior;
 import game.entities.Item.Item;
 import game.logic.BattleEngine;
 import game.logic.Generator.PlayerType;
 import game.logic.Level.LevelDifficulty;
 import game.logic.Level.LevelFactory;
 import game.logic.Round.State;
-import game.logic.Round.TurnOrderStrategy;
 import game.logic.Round.Wave;
 import game.logic.Action.Player.Action;
-import game.logic.Action.Player.ActionList;
 import game.ui.*;
 
 public class TurnBasedApp {
@@ -43,6 +40,7 @@ public class TurnBasedApp {
                 BattleEngine.endRound(); // round += 1 for Engine
                 s = BattleEngine.nextState(); // updates round number
                 s.resetMap(); // updates TO
+                BattleEngine.decreaseCD(s); // decrease CD
             }
             // if wave cleared
             if (!BattleEngine.isWaveAlive(s)) { // replenish wave
@@ -59,7 +57,7 @@ public class TurnBasedApp {
             }
             // Display States
             GameUI.displayGameState(s);
-
+            // maybe display turn order to player here?
             // get next Combatant in TO
             Combatant c = s.getTurnOrderStrategy().getNextCombatant();
             System.out.println(c.getName()+"'s turn");
@@ -72,6 +70,7 @@ public class TurnBasedApp {
                 List<Combatant> e = GameUI.choosePlayerTarget(s, result);
                 result.getKey().execute(c, e); // execute action
             } else {
+                // TO IMPLEMENT: NAISTRA & MATIN
                 // logic to select behaviour
                 BattleEngine.showEnemyActions();
                 // execute behaviour

@@ -4,7 +4,7 @@ public class DefendEffect implements StatusEffect {
     private String name = "Defending";
     private String description;
     private int defenseBoost;
-    private int duration;
+    public int duration;
 
     public DefendEffect(int defenseBoost, int duration) {
         this.defenseBoost = defenseBoost;
@@ -34,4 +34,8 @@ public class DefendEffect implements StatusEffect {
     }
 
     public boolean skipsTurn() { return false; }
+
+    public StatusEffect getCopy() {
+        return new DefendEffect(this.defenseBoost, this.duration);
+    }
 }

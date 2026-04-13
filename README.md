@@ -11,11 +11,12 @@ Type `java TurnBasedApp` into the terminal
 ## Step 3. Clear .class files
 Type `find . -name "*.class" -delete` into the terminal (Bash)
 
+### Can run the 3 commands in 1 line
+`find . -name "*.class" -delete && javac TurnBasedApp.java && java TurnBasedApp`
+
 
 ## Left to implement
-- StatusEffects & indicators
 - GameCompletion Screens
 - Enemy Attack (Behaviors)
-- Items (only Potions work atm)
 ### Extra
 - Undo

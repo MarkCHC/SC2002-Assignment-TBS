@@ -20,7 +20,7 @@ public class SmokeBomb implements Item, Action {
     }
 
     public String getName() {
-        return "Smoke Bomb";
+        return "Smoke Bomb (x" + this.sbQuantity + ")";
     }
 
     public String getDescription() {
@@ -42,7 +42,7 @@ public class SmokeBomb implements Item, Action {
             return;
         }
 
-        System.out.println("Threw a " + getName() + " at their feet!");
+        System.out.println("Threw a " + getLabel() + " at their feet!");
 
         Stealth effect = new Stealth(this.duration);
         target.addStatusEffect(effect);

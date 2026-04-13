@@ -39,4 +39,8 @@ public class Stun implements StatusEffect {
     public boolean skipsTurn() {
         return true;
     }
+
+    public StatusEffect getCopy() {
+        return new Stun(this.duration);
+    }
 }

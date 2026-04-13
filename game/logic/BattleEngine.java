@@ -6,6 +6,7 @@ import java.util.Iterator;
 import game.entities.Combatant;
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
+import game.entities.StatusEffect.StatusEffect;
 import game.logic.Round.State;
 import game.logic.Round.Wave;
 
@@ -53,6 +54,23 @@ public class BattleEngine {
 
     public static void endRound() {
         round += 1;
+    }
+
+    public static void decreaseCD(State s) {
+        for (Player c: s.getPlayerState()) {
+            List<StatusEffect> sList = c.getActiveEffects();
+            System.out.println(c.getActiveEffects());
+            for (StatusEffect se: sList) {
+                se.passTurn();
+            }
+            c.getSpecialSkill().reduceCooldown();
+        }
+        for (Enemy c: s.getEnemyState()) {
+            List<StatusEffect> sList = c.getActiveEffects();
+            for (StatusEffect se: sList) {
+                se.passTurn();
+            }
+        }
     }
 
     public static void undoTurn() { // pop and jump back in states
@@ -114,6 +132,6 @@ public class BattleEngine {
     }
 
     public static void restartGame() {
-        
+
     }
 }

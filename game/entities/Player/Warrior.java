@@ -1,5 +1,8 @@
 package game.entities.Player;
 import game.logic.Action.SpecialSkills.SpecialSkill;
+import java.util.List;
+import java.util.ArrayList;
+import game.entities.StatusEffect.StatusEffect;
 import game.logic.Action.SpecialSkills.ShieldBash;
 
 public class Warrior extends Player {
@@ -21,13 +24,18 @@ public class Warrior extends Player {
         int attack, 
         int defense, 
         int speed, 
-        SpecialSkill sp
+        SpecialSkill sp,
+        List<StatusEffect> activeEffects
     ) 
     {
-        super(name, maxHp, currentHp, attack, defense, speed, sp);
+        super(name, maxHp, currentHp, attack, defense, speed, sp, activeEffects);
     }
 
     public Warrior createCopy() {
+        List<StatusEffect> sList = new ArrayList<>();
+        for (StatusEffect se: activeEffects) {
+            sList.add(se.getCopy());
+        }
         return new Warrior(
             this.getName(), 
             this.getMaxHp(), 
@@ -35,7 +43,8 @@ public class Warrior extends Player {
             this.getAttack(), 
             this.getDefense(), 
             this.getSpeed(), 
-            this.getSpecialSkill().getCopy()
+            this.getSpecialSkill().getCopy(),
+            sList
         );
     }
 }

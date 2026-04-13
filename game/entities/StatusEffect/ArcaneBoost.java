@@ -39,6 +39,10 @@ public class ArcaneBoost implements StatusEffect {
         return false;
     }
 
+    public StatusEffect getCopy() {
+        return new ArcaneBoost(this.enemiesDefeated);
+    }
+
     public void addKill() {
     this.enemiesDefeated++;
     System.out.println("Wizard base attack grows");

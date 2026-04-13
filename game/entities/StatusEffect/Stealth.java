@@ -40,4 +40,8 @@ public class Stealth implements StatusEffect{
     public boolean skipsTurn() {
         return false;
     }
+
+    public StatusEffect getCopy() {
+        return new Stealth(this.duration);
+    }
 }

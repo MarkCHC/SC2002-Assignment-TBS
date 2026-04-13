@@ -35,8 +35,7 @@ public class TurnOrderStrategy {
     public void endTurn() {
         if (turnOrder.size() > 0) {
             Combatant c = turnOrder.get(0);
-            turnLog.put(c.getName(), turnLog.get(c.getName())+1); // Map[name] += 1
-            // turnLog.put(c.getName(), turnLog.get(c.getName())+1); // ^ = current round
+            turnLog.put(c.getName(), turnLog.get(c.getName())+1); // Map[name] += 1 OR give current round
             turnOrder.remove(0);
         }
     }

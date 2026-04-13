@@ -8,4 +8,5 @@ public interface StatusEffect {
     int modifyOutgoingDamage(int baseDamage);
     void passTurn();
     boolean skipsTurn();
+    StatusEffect getCopy();
 }

@@ -14,7 +14,7 @@ public abstract class Combatant {
     private SpecialSkill specialSkill;
     protected List<StatusEffect> activeEffects = new ArrayList<>();
 
-    protected Combatant(String name, int maxHp, int hp, int attack, int defense, int speed, SpecialSkill sp) {
+    protected Combatant(String name, int maxHp, int hp, int attack, int defense, int speed, SpecialSkill sp, List<StatusEffect> se) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = hp;
@@ -22,6 +22,7 @@ public abstract class Combatant {
         this.defense = defense;
         this.speed = speed;
         this.specialSkill = sp;
+        this.activeEffects = se;
     }
 
     protected abstract Combatant createCopy();
@@ -57,7 +58,10 @@ public abstract class Combatant {
     }
 
     public List<StatusEffect> getActiveEffects() {
-        return activeEffects;
+        return activeEffects
+                .stream()
+                .filter(e -> e.isActive())
+                .toList();
     }
 
     public boolean isAlive() {
