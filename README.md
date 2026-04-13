@@ -20,3 +20,5 @@ Type `find . -name "*.class" -delete` into the terminal (Bash)
 - Enemy Attack (Behaviors)
 ### Extra
 - Undo
+- More enemy variants (should be fast)
+- Anything else that's fast and not inconvenient to implement
