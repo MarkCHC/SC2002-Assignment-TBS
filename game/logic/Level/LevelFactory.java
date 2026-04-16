@@ -52,8 +52,9 @@ public class LevelFactory {
 
     private static String suffix(int index) { // need change prob
         // int zeroBased = index - 1;
-        char letter = (char) ('A' + (index % 25));
-        int cycle = index / 25;
+        // change 25 to 26. Ensures 'Z' spawn if have
+        char letter = (char) ('A' + (index % 26));
+        int cycle = index / 26;
         if (cycle == 0) {
             return String.valueOf(letter);
         }
