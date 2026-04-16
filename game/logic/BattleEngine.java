@@ -59,7 +59,8 @@ public class BattleEngine {
     public static void decreaseCD(State s) {
         for (Player c: s.getPlayerState()) {
             List<StatusEffect> sList = c.getActiveEffects();
-            System.out.println(c.getActiveEffects());
+            //removed
+            //System.out.println(c.getActiveEffects());
             for (StatusEffect se: sList) {
                 se.passTurn();
             }
