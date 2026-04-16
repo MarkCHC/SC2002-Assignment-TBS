@@ -1,6 +1,8 @@
 package game.logic.Action.Enemy;
 import game.entities.Enemy.Enemy;
 import game.entities.Player.Player;
+import game.logic.Action.Player.Action;
+import game.logic.Action.Player.BasicAttack;
 
 public class BasicAttackBehavior implements EnemyBehavior {
     public String getName() {
@@ -10,11 +12,7 @@ public class BasicAttackBehavior implements EnemyBehavior {
     // in the real implementation this would return Action
     // and the action itself would be execute via the action class
     // so in implementation it simply return BasicAttack
-    public void act(Enemy enemy, Player player) {
-        int damage = Math.max(0,player.getAttack()-enemy.getDefense());
-        System.out.println(enemy.getName() + " uses Basic Attack on " + player.getName()
-                + " for " + damage + " damage.");
-    // all this would be    
-    // return BasicAttack
+    public Action getAction() {
+        return new BasicAttack();
     }
 }
