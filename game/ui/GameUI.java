@@ -17,6 +17,8 @@ import game.logic.Action.Player.Defend;
 import game.logic.Action.SpecialSkills.SpecialSkill;
 
 public class GameUI {
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static List<Combatant> choosePlayerTarget(State s, Map.Entry<Action, Integer> res) {
         List<Combatant> cList = new ArrayList<Combatant>();;
         Enemy target;
@@ -26,14 +28,16 @@ public class GameUI {
                 cList.add(target);
                 return cList;
             case 2: // Defend
-                return null; // don't need second target
+                //changed null to Arraylist. Returns empty list instead of null to prevent NullPointerExceptions
+                return new ArrayList<>(); // don't need second target
             case 3: // Item
                 Item i = (Item)res.getKey();
-                if (i.getLabel() == ItemList.POWER_STONE.create(0).getLabel()) {
+                //used .equals() for String Comparison
+                if (ItemList.POWER_STONE.create(0).getLabel().equals(i.getLabel())) {
                      // shd have better way of implementing but works for now
                      // right now fetching player from state but there could be multiple
-                    if (s.getPlayerState().get(0)
-                    .getSpecialSkill().getSpecialSkillName() == "Arcane Blast") {
+                    //used .equals() for String Comparison
+                    if ("Arcane Blast".equals(s.getPlayerState().get(0).getSpecialSkill().getSpecialSkillName())) {
                         for (Combatant c: s.getEnemyState()) {
                             cList.add(c);
                         }
@@ -43,10 +47,11 @@ public class GameUI {
                     }
                     return cList;
                 }
-                return null; // don't need second target
+                //return empty list instead of null
+                return new ArrayList<>(); // don't need second target
             case 4: // Special Skill
                 SpecialSkill sp = (SpecialSkill)res.getKey();
-                if (sp.getSpecialSkillName() == "Arcane Blast") { // shd have better way of implementing
+                if ("Arcane Blast".equals(sp.getSpecialSkillName())) { // shd have better way of implementing
                     for (Combatant c: s.getEnemyState()) {
                         cList.add(c);
                     }
@@ -56,7 +61,8 @@ public class GameUI {
                 }   
                 return cList;
             default:
-                return null;
+                //return empty list
+                return new ArrayList<>();
         }
     }
 
@@ -81,7 +87,7 @@ public class GameUI {
                     return (target == 0)? 
                         null 
                         : 
-                        new AbstractMap.SimpleEntry<>(s.getUsableInventory().get(target), 3);
+                        new AbstractMap.SimpleEntry<>(s.getUsableInventory().get(target - 1), 3);
                 } else {
                     return null;
                 }
@@ -199,7 +205,6 @@ public class GameUI {
     }
 
     private static int askInput(String info, int start, int end) {
-        Scanner scanner = new Scanner(System.in);
         int choice;
         do {
             System.out.print(info+">> ");
