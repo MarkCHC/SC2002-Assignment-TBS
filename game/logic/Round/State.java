@@ -79,7 +79,7 @@ public class State {
 
     public List<Action> getUsableInventory() {
         return inventory.stream()
-                    .filter(i -> i instanceof Action)
+                    .filter(i -> i instanceof Action && i.getQuantity() > 0)
                     .map(i -> (Action) i)
                     .toList();
     }
