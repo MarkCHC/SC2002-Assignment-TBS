@@ -22,7 +22,10 @@ public abstract class Combatant {
         this.defense = defense;
         this.speed = speed;
         this.specialSkill = sp;
-        this.activeEffects = se;
+        if (se != null) {
+            this.activeEffects = new ArrayList<>(se);
+        }
+
     }
 
     protected abstract Combatant createCopy();
@@ -75,7 +78,7 @@ public abstract class Combatant {
     }
     
     public void heal(int amount){
-        hp = Math.max(hp + amount, maxHp);
+        hp = Math.min(hp + amount, maxHp);
     }
 
     public void setHp(int hp) {
