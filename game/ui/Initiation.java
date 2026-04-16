@@ -8,6 +8,9 @@ import game.entities.Item.ItemList;
 import game.entities.Item.Item;
 
 public class Initiation {
+    //single static scanner for whole class
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static void showLoadingScreen() {
         System.out.println("==================================================================");
         System.out.println("|| ██████ █████▄ ▄█████   █████▄  ▄▄▄ ▄▄▄▄▄▄ ▄▄▄▄▄▄ ▄▄    ▄▄▄▄▄ ||");
@@ -28,7 +31,6 @@ public class Initiation {
         }
         
         System.out.print(">> ");
-        Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
@@ -54,7 +56,6 @@ public class Initiation {
         }
 
         System.out.print(">> ");
-        Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         System.out.println();
         switch(choice) {
@@ -77,7 +78,6 @@ public class Initiation {
             System.out.println((i+1) + ". " + itemList[i]);
         }
 
-        Scanner scanner = new Scanner(System.in);
         int[] quantity = {0, 0, 0};
         while (startingItemCount > 0) {
             System.out.println("Select "+(startingItemCount == 2? "first":"second")+" item");
