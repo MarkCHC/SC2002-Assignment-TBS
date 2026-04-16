@@ -29,7 +29,8 @@ public class TurnBasedApp {
         List<Item> inventory = Initiation.chooseItems();
         State initialState = new State(1);
         initialState.initialize(initCharacters, initWaves, inventory);
-        BattleEngine.getStates().add(0, initialState);
+        //Standardize appending to states list to maintain chronological history
+        BattleEngine.getStates().add(initialState);
         System.out.println("==================== GAME SETUP COMPLETE =========================");
 
         // Battle Engine
