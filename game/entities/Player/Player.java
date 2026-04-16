@@ -6,31 +6,20 @@ import game.entities.StatusEffect.StatusEffect;
 import game.logic.Action.SpecialSkills.SpecialSkill;
 
 public abstract class Player extends Combatant {
-    private final List<String> startingItems;
     // private SpecialSkill specialSkill;
 
     protected Player(String name, int maxHp, int attack, int defense, int speed, SpecialSkill sp) {
         super(name, maxHp, maxHp, attack, defense, speed, sp, new ArrayList<>());
-        this.startingItems = new ArrayList<>();
     } // for Instantiation - 6 params
 
     protected Player(String name, int maxHp, int currentHp, int attack, int defense, int speed, SpecialSkill sp, List<StatusEffect> se) {
         super(name, maxHp, currentHp, attack, defense, speed, sp, se);
-        this.startingItems = new ArrayList<>();
     } // for deep copy - 8 params
 
     public abstract Player createCopy();
 
     public Boolean isPlayer() {
         return true;
-    }
-
-    public void addStartingItem(String itemName) {
-        startingItems.add(itemName);
-    }
-
-    public List<String> getStartingItems() {
-        return startingItems;
     }
 
     // public getSpecialSkill
