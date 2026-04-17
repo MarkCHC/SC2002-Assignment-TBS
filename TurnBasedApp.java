@@ -1,19 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import game.entities.Combatant;
 import game.entities.Enemy.Enemy;
-import game.entities.Player.Player;
 import game.entities.Item.Item;
+import game.entities.Player.Player;
+import game.entities.StatusEffect.StatusEffect;
+import game.logic.Action.Player.Action;
 import game.logic.BattleEngine;
 import game.logic.Generator.PlayerType;
 import game.logic.Level.LevelDifficulty;
 import game.logic.Level.LevelFactory;
 import game.logic.Round.State;
 import game.logic.Round.Wave;
-import game.logic.Action.Player.Action;
 import game.ui.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class TurnBasedApp {
     public static void main() {
@@ -62,6 +62,25 @@ public class TurnBasedApp {
             // get next Combatant in TO
             Combatant c = s.getTurnOrderStrategy().getNextCombatant();
             System.out.println(c.getName()+"'s turn");
+
+            // stun check start, find a better way to implement this
+            boolean skipTurn = false;
+            for (StatusEffect effect : c.getActiveEffects()) {
+                if (effect.skipsTurn()) {
+                    skipTurn = true;
+                    System.out.println(c.getName() + " is stunned and cannot act.");
+                    break;
+                }
+            }
+            //should be safe for now but if there is DoT might need to change
+            if (skipTurn) {
+                s.getTurnOrderStrategy().endTurn();
+                BattleEngine.endTurn(s);
+                BattleEngine.removeDead();
+                continue;
+            }
+            //end of stun check
+
             if (c.isPlayer()) {
                 GameUI.showPlayerActions(c); // display actions available
                 Map.Entry<Action, Integer> result;
@@ -72,9 +91,15 @@ public class TurnBasedApp {
                 result.getKey().execute(c, e); // execute action
             } else {
                 // TO IMPLEMENT: NAISTRA & MATIN
-                // logic to select behaviour
+                Enemy enemy = (Enemy) c;
+                Action action = enemy.getBehavior().chooseAction(s, enemy);
+                List<Combatant> targets = enemy.getBehavior().chooseTargets(s, enemy, action);
+                
                 BattleEngine.showEnemyActions();
-                // execute behaviour
+                
+                if (action != null && targets != null && !targets.isEmpty()) {
+                    action.execute(enemy, targets);
+                }
             }
             // end turn
             s.getTurnOrderStrategy().endTurn(); // remove from TO
