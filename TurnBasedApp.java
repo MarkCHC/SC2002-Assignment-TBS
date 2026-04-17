@@ -36,7 +36,6 @@ public class TurnBasedApp {
         // Battle Engine
         do {
             State s = BattleEngine.nextState();
-            // System.out.println(s.getTurnOrderStrategy().getTurnOrder().size());
             if (s.getTurnOrderStrategy().getTurnOrder().size() < 1) { // con for ending round = no more turnOrder
                 BattleEngine.endRound(); // round += 1 for Engine
                 s = BattleEngine.nextState(); // updates round number
@@ -45,7 +44,6 @@ public class TurnBasedApp {
             }
             // if wave cleared
             if (!BattleEngine.isWaveAlive(s)) { // replenish wave
-                // System.out.println("Replenishing waves...");
                 Wave wave = BattleEngine.getNextWave(s);
                 for (Enemy e: wave.getEnemies()) {
                     s.getEnemyState().add(e.createCopy());
@@ -58,7 +56,7 @@ public class TurnBasedApp {
             }
             // Display States
             GameUI.displayGameState(s);
-            // maybe display turn order to player here?
+            // Extensibility: display turn order for the round here
             // get next Combatant in TO
             Combatant c = s.getTurnOrderStrategy().getNextCombatant();
             System.out.println(c.getName()+"'s turn");
@@ -105,9 +103,6 @@ public class TurnBasedApp {
             s.getTurnOrderStrategy().endTurn(); // remove from TO
             BattleEngine.endTurn(s); // adds modified state
             BattleEngine.removeDead();
-            // consider if the action is actually working,
-            //     if the turnOrder returns pointer to same object as those in the State
-            // System.out.println(s.getTurnOrderStrategy().getTurnOrder().size());
 
             // Checks for Game Over
             if (!BattleEngine.areThereEnemiesLeft()) {

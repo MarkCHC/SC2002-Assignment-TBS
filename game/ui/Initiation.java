@@ -19,7 +19,7 @@ public class Initiation {
         System.out.println("==================================================================");
     }
 
-    public static int choosePlayers() { // fixed 1 for now, tensibility could be multiple
+    public static int choosePlayers() { // fixed 1 for now, extensibility could be multiple
         return 1;
     }
 
@@ -116,9 +116,5 @@ public class Initiation {
         System.out.println("1. Attack");
         System.out.println("2. Use Item");
         System.out.println("3. Defend");
-
-        // System.out.print(">> ");
-        // Scanner scanner = new Scanner(System.in);
-        // int choice = scanner.nextInt();
     }
 }

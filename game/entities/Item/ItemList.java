@@ -7,7 +7,7 @@ public enum ItemList {
     POTION(Potion::new),
     POWER_STONE(PowerStone::new),
     SMOKE_BOMB(SmokeBomb::new);
-    // add more items here
+    // Extensibility: add more items here
 
     private final Function<Integer, Item> factory;
     private static final Map<String, ItemList> INDEX = new HashMap<>();

@@ -4,7 +4,6 @@ import game.entities.Enemy.Enemy;
 import java.util.ArrayList;
 
 public class Wave {
-    // private int waveNumber;
     private List<Enemy> enemies;
 
     // constructors

@@ -98,7 +98,7 @@ public class State {
         }
         TurnOrderStrategy TO = new TurnOrderStrategy(cList, this.round);
         this.turnOrderState = TO;
-        this.turnOrderState.sort(); // needed?
+        this.turnOrderState.sort(); // important, only sorted here
     }
 
     public void initialize(List<Player> playerState, List<Wave> wavesLeft, List<Item> inventory) {

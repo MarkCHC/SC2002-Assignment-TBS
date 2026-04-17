@@ -135,7 +135,6 @@ public class GameUI {
     }
 
     // HELPER FUNCTIONS
-    // private static handleAOE() {}
 
     private static Enemy pickEnemy(List<Enemy> enemies) {
         System.out.println("Select enemy to attack:");

@@ -59,8 +59,6 @@ public class BattleEngine {
     public static void decreaseCD(State s) {
         for (Player c: s.getPlayerState()) {
             List<StatusEffect> sList = c.getActiveEffects();
-            //removed
-            //System.out.println(c.getActiveEffects());
             for (StatusEffect se: sList) {
                 se.passTurn();
             }
@@ -74,9 +72,10 @@ public class BattleEngine {
         }
     }
 
-    public static void undoTurn() { // pop and jump back in states
+    // Extensibility: pop and jump back in states
+    // public static void undoTurn() {
         
-    }
+    // }
 
     public static Map<String, Integer> getLastScenario() {
         State s = states.get(states.size()-1);

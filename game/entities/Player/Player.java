@@ -6,7 +6,6 @@ import game.entities.StatusEffect.StatusEffect;
 import game.logic.Action.SpecialSkills.SpecialSkill;
 
 public abstract class Player extends Combatant {
-    // private SpecialSkill specialSkill;
 
     protected Player(String name, int maxHp, int attack, int defense, int speed, SpecialSkill sp) {
         super(name, maxHp, maxHp, attack, defense, speed, sp, new ArrayList<>());
@@ -21,6 +20,4 @@ public abstract class Player extends Combatant {
     public Boolean isPlayer() {
         return true;
     }
-
-    // public getSpecialSkill
 }

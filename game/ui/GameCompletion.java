@@ -15,7 +15,7 @@ public class GameCompletion {
         System.out.println("\n==================================================================");
         System.out.println("||                                                              ||");
         System.out.println("||                     D E F E A T .                            ||");
-        System.out.println("||              Your Character has been defeated.                  ||");
+        System.out.println("||              Your Character has been defeated.               ||");
         System.out.println("||                                                              ||");
         System.out.println("==================================================================\n");
     }

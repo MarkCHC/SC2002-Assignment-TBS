@@ -3,8 +3,6 @@ import java.util.List;
 import game.logic.Action.Player.Action;
 import game.logic.Action.SpecialSkills.SpecialSkill;
 import game.entities.Combatant;
-// import game.entities.Enemy.Enemy;
-// import game.entities.Player.Player;
 
 public class PowerStone implements Item, Action {
 
@@ -30,12 +28,7 @@ public class PowerStone implements Item, Action {
         return this.psQuantity;
     }
 
-    // public void use(Enemy target){}
-    // //here for fulfilling Item interface requirement
-    // //will be removed once skill is not implementing Item
-
     public void execute(Combatant actor, List<Combatant> targets) {
-    // public void use(Player target) {
         if (this.psQuantity <= 0){
             System.out.println("Out of Power Stones!");
             return;
