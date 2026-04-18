@@ -5,8 +5,8 @@ public class GameCompletion {
     public static void playerWin() {
         System.out.println("\n==================================================================");
         System.out.println("||                                                              ||");
-        System.out.println("||                    V I C T O R Y !                           ||");
-        System.out.println("||             All enemy waves have been cleared.               ||");
+        System.out.println("||               C O N G R A T U L A T I O N S                  ||");
+        System.out.println("||             You have defeated all your enemies.              ||");
         System.out.println("||                                                              ||");
         System.out.println("==================================================================\n");
     }
@@ -14,8 +14,8 @@ public class GameCompletion {
     public static void playerLose() {
         System.out.println("\n==================================================================");
         System.out.println("||                                                              ||");
-        System.out.println("||                     D E F E A T .                            ||");
-        System.out.println("||              Your Character has been defeated.               ||");
+        System.out.println("||                     D E F E A T E D.                         ||");
+        System.out.println("||                 Don't give up, try again!                    ||");
         System.out.println("||                                                              ||");
         System.out.println("==================================================================\n");
     }

@@ -2,6 +2,7 @@ package game.logic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.Iterator;
 import game.entities.Combatant;
 import game.entities.Enemy.Enemy;
@@ -25,8 +26,6 @@ public class BattleEngine {
             System.out.println("Loading interrupted");
         }
     }
-
-    public static void executePlayerAction() {}
 
     public static void removeDead() {
         State s = states.get(states.size()-1);
@@ -132,6 +131,9 @@ public class BattleEngine {
     }
 
     public static void restartGame() {
-
+        round = 1;
+        states = states.stream()
+                        .limit(1)
+                        .collect(Collectors.toList());
     }
 }

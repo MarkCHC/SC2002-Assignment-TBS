@@ -60,12 +60,12 @@ public class ArcaneBlast extends SpecialSkill {
             int finalDamage = Math.max(0, rawDamage);
             target.takeDamage(finalDamage);
 
-            System.out.println("  → Hits " + target.getName() + " for " + finalDamage + " damage!"
+            System.out.println("  > Hits " + target.getName() + " for " + finalDamage + " damage!"
                     + " (HP: " + target.getHp() + ")");
 
             if (!target.isAlive()) {
                 killCount++;
-                System.out.println("  → " + target.getName() + " is eliminated!");
+                System.out.println("  > " + target.getName() + " is eliminated!");
             }
         }
 

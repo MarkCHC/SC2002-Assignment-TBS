@@ -18,6 +18,7 @@ import java.util.Map;
 public class TurnBasedApp {
     public static void main() {
         // Initiation
+        Boolean RESTART = true;
         Initiation.showLoadingScreen();
         LevelDifficulty difficulty = Initiation.chooseDifficulty();
         List<Wave> initWaves = LevelFactory.createWaves(difficulty);
@@ -110,15 +111,19 @@ public class TurnBasedApp {
                 System.out.println("Player win, game ends.");
                 System.out.println("Option to restart. Declined.");
                 // play again logic - reset to first state
-                break;
+                RESTART = Initiation.chooseRestart();
+                if (RESTART)
+                    BattleEngine.restartGame();
             }
             if (!BattleEngine.isPlayerAlive()) {
                 GameCompletion.playerLose();
                 System.out.println("Player lose, game ends.");
                 System.out.println("Option to restart. Declined.");
-                break;
                 // play again logic - reset to first state
+                RESTART = Initiation.chooseRestart();
+                if (RESTART)
+                    BattleEngine.restartGame();
             }
-        } while (true); // this checks for restart logic
+        } while (RESTART); // this checks for restart logic
     }
 }

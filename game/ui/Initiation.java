@@ -111,6 +111,27 @@ public class Initiation {
         return inventory;
     }
 
+    public static Boolean chooseRestart() {
+        System.out.println("Play again? ");
+        System.out.println("1. Yes ");
+        System.out.println("2. No ");
+
+        int choice = 0;
+        while (choice != 1 && choice != 2) {
+            System.out.print(">> ");
+            choice = scanner.nextInt();
+            switch(choice) {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Invalid choice, choose again!");
+            }
+        }
+        return false;
+    }
+
     public static void displayActions() {
         System.out.println("Choose action:");
         System.out.println("1. Attack");
