@@ -17,6 +17,18 @@ public class GameCompletion {
         System.out.println("||                     D E F E A T E D.                         ||");
         System.out.println("||                 Don't give up, try again!                    ||");
         System.out.println("||                                                              ||");
+        System.out.print("==================================================================\n");
+    }
+
+    public static void winStats(int remaining, int survived) {
+        System.out.println("||       Remaining HP: "+remaining+"                                       ||");
+        System.out.println("||       Total Rounds: "+survived+"                                        ||");
+        System.out.println("==================================================================\n");
+    }
+
+    public static void loseStats(int remaining, int survived) {
+        System.out.println("||       Enemies Remaining: "+remaining+"                                  ||");
+        System.out.println("||       Total Rounds: "+survived+"                                        ||");
         System.out.println("==================================================================\n");
     }
 }

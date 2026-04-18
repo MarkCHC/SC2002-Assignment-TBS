@@ -108,8 +108,8 @@ public class TurnBasedApp {
             // Checks for Game Over
             if (!BattleEngine.areThereEnemiesLeft()) {
                 GameCompletion.playerWin();
-                System.out.println("Player win, game ends.");
-                System.out.println("Option to restart. Declined.");
+                // statistics
+                GameCompletion.winStats(s.getPlayerState().get(0).getHp(), s.getRound());
                 // play again logic - reset to first state
                 RESTART = Initiation.chooseRestart();
                 if (RESTART)
@@ -117,8 +117,8 @@ public class TurnBasedApp {
             }
             if (!BattleEngine.isPlayerAlive()) {
                 GameCompletion.playerLose();
-                System.out.println("Player lose, game ends.");
-                System.out.println("Option to restart. Declined.");
+                // statistics
+                GameCompletion.loseStats(s.getEnemyState().size(), s.getRound());
                 // play again logic - reset to first state
                 RESTART = Initiation.chooseRestart();
                 if (RESTART)
