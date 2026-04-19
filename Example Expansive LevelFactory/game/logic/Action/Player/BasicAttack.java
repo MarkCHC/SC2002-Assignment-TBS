@@ -1,0 +1,30 @@
+package game.logic.Action.Player;
+import java.util.List;
+import game.entities.StatusEffect.StatusEffect;
+import game.entities.Combatant;
+
+public class BasicAttack implements Action {
+
+    // @Override
+    public void execute(Combatant actor, List<Combatant> targets) {
+        Combatant target = targets.get(0);
+
+        int rawDamage = actor.getAttack() - target.getDefense();
+
+        // pass damage through actor's outgoing effects (e.g. ArcaneBoost)
+        for (StatusEffect effect : actor.getActiveEffects()) {
+            rawDamage = effect.modifyOutgoingDamage(rawDamage);
+        }
+
+        // pass damage through target's incoming effects (e.g. Stealth blocks it)
+        for (StatusEffect effect : target.getActiveEffects()) {
+            rawDamage = effect.modifyIncomingDamage(rawDamage);
+        }
+
+        int finalDamage = Math.max(0, rawDamage);
+        target.takeDamage(finalDamage);
+
+        System.out.println(actor.getName() + " attacks " + target.getName()
+                + " for " + finalDamage + " damage!");
+    }
+}
